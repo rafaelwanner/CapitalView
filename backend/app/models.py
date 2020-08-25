@@ -11,7 +11,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     assets = db.relationship('Asset', backref='allocator', lazy='dynamic')
 
-    def email__reg__(self):
+    def __reg__(self):
         return '<User {}>'.format(self.username)
 
     def set_password(self, password):

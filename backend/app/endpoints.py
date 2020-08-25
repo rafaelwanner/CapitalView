@@ -2,6 +2,7 @@ from flask import request, render_template, jsonify
 from app import app, db
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
+from assets import stocks, cryptocurrency, fiat
 
 @app.route('/')
 def home():
@@ -35,7 +36,7 @@ def register():
         message = "Resgistration successful!",
         id = user.user_id
         #token=
-        )
+    )
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -55,13 +56,22 @@ def login():
             message = "Login successful!",
             id = user.user_id
             #token
-            )
+        )
 
-@app.route('/api/choose_asset', methods=['GET'])
-def choose_asset():
+@app.route('/api/assets', methods=['GET'])
+def assets():
 
     #   assets: {
     #        stocks: [AAPL, AMD ...],
     #        cryptocurrency: [BTC, ETH ...],
-    #        comodities: []
+    #        fiat: [CHF, USD, EUR ...]
+    #        comodities: [Oil, ]
     #    }
+
+    return {
+        'assets': {
+            'Stocks': stocks,
+            'Cryptocurrencies': cryptocurrency,
+            'Fiat currency': fiat
+            }
+        }
