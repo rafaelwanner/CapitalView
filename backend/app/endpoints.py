@@ -1,10 +1,17 @@
 from flask import request, render_template, jsonify
-from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity
+from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identity, get_raw_jwt
 from app import app, db, jwt
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
 from assets import stocks, cryptocurrency, fiat
 from utils.sort import prepare_overview
+
+blacklist = set()
+
+@jwt.token_in_blacklist_loader
+def check_if_token_in_blacklist(decrypted_token):
+    jti = decrypted_token['jti']
+    return jti in blacklist
 
 @app.route('/')
 def home():
@@ -64,6 +71,15 @@ def login():
             id = user.user_id,
             token = access_token
         )
+
+@app.route('/api/logout', methods=['POST'])
+@jwt_required
+def logout():
+    jti = get_raw_jwt()['jti']
+    blacklist.add(jti)
+    return jsonify(
+        message="Logout successful!"
+    ), 200
 
 @app.route('/api/assets', methods=['GET'])
 @jwt_required
