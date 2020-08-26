@@ -4,7 +4,7 @@ from app import app, db, jwt
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
 from assets import stocks, cryptocurrency, fiat
-from utils.sort import sort_overview
+from utils.sort import prepare_overview
 
 @app.route('/')
 def home():
@@ -127,7 +127,7 @@ def add_asset():
     ), 201
 
 
-@app.route('/api/overview')
+@app.route('/api/overview', methods=['GET'])
 @jwt_required
 def overview():
 
@@ -156,3 +156,10 @@ def overview():
     #   }
 
     current_user = get_jwt_identity()
+    user = User.query.filter_by(username=current_user).first()
+
+    data = prepare_overview(user)
+
+    return jsonify(
+        data=data
+    ), 200
