@@ -11,7 +11,7 @@ BASE_URL = "https://cloud.iexapis.com/"
 
 #returns string of current price of an asset
 def get_price(asset_class, symbol):
-    if asset_class == "Stock":
+    if asset_class == "Stocks":
         req = BASE_URL + "stable/stock/" + symbol + "/quote?token=" + API_KEY
         answer = requests.get(req)
         if answer.status_code == 200:

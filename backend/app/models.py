@@ -2,9 +2,10 @@ from app import db
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
+from data import get_price
 
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64))
     username = db.Column(db.String(64), unique=True)
