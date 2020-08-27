@@ -1,4 +1,7 @@
 def fraction(total, portion):
+    if total == 0:
+        return 0
+
     fraction = round(( portion / total ) * 100, 2)
     return fraction
 
