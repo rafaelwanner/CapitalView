@@ -224,7 +224,7 @@ def edit():
     user = User.query.filter_by(username=current_user).first()
     asset = Asset.query.filter_by(id=data['id']).first()
 
-    if asset.user_id != user.user_id:
+    if asset.user_id != user.user_id or asset == None:
         return jsonify(
             message="Asset not found!"
         ), 404
@@ -235,4 +235,24 @@ def edit():
 
     return jsonify(
         message="Update successfull!"
+    ), 200
+
+@app.route('/api/delete/<id>', methods=['GET'])
+@jwt_required
+def delete(id):
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(username=current_user).first()
+    asset = Asset.query.filter_by(id=id).first()
+
+    if asset.user_id != user.user_id or asset == None:
+        return jsonify(
+            message="Asset not found!"
+        ), 404
+
+    db.session.delete(asset)
+    db.session.commit()
+
+    return jsonify(
+        message="Asset deleted successfully!"
     ), 200
