@@ -4,7 +4,7 @@ from app import app, db, jwt
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
 from assets import stocks, cryptocurrency, fiat
-from utils.sort import prepare_overview
+from utils.sort import process_overview, process_detail
 
 blacklist = set()
 
@@ -147,7 +147,7 @@ def add_asset():
 @jwt_required
 def overview():
 
-    #   asset: {
+    #   holdings: {
     #        stocks: {
     #            AMD: [<qty>, <value in USD>],
     #            AAPL: [<qty>, <value in USD>]
@@ -174,8 +174,65 @@ def overview():
     current_user = get_jwt_identity()
     user = User.query.filter_by(username=current_user).first()
 
-    data = prepare_overview(user)
+    data = process_overview(user)
 
     return jsonify(
         data=data
+    ), 200
+
+@app.route('/api/detail/<asset>', methods=['GET'])
+@jwt_required
+def detail(asset): #i.e. asset = AMD
+
+    #   data: {
+    #        asset_class: '',
+    #        asset: '',
+    #        total_quantity: '',
+    #        total_value: '',
+    #        holdings: {
+    #               id: {
+    #                   date: <data bought>,
+    #                   price: <price bought at>,
+    #                   current_price: <price now>,
+    #                   quantity: '',
+    #                   gain_percent: <gain in percent>,
+    #                   gain: <gain in USD>
+    #                }
+    #         }
+    #    }
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(username=current_user).first()
+
+    data = process_detail(user, asset)
+
+    return data
+
+@app.route('/api/edit', methods=['POST'])
+@jwt_required
+def edit():
+
+    #data: {
+    #    id: <asset id>,
+    #    price: <new price bought at>,
+    #    quantity: <new asset quantity>,
+    #  }
+
+    data = request.get_json()
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(username=current_user).first()
+    asset = Asset.query.filter_by(id=data['id']).first()
+
+    if asset.user_id != user.user_id:
+        return jsonify(
+            message="Asset not found!"
+        ), 404
+
+    asset.price = data['price']
+    asset.quantity = data['quantity']
+    db.session.commit()
+
+    return jsonify(
+        message="Update successfull!"
     ), 200

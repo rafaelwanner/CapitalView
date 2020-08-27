@@ -37,7 +37,7 @@ class Asset(db.Model):
         return '<Asset {}'.format(self.asset)
 
     def set_price(self):
-        self.price = get_price(self.asset_class, self.asset)
+        self.price = round(get_price(self.asset_class, self.asset), 2)
 
     def format_time(self):
         return self.timestamp.strftime('%m/%d/%Y, %H:%M:%S')

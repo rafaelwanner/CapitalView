@@ -16,13 +16,13 @@ def get_price(asset_class, symbol):
         answer = requests.get(req)
         if answer.status_code == 200:
             answer_dict = answer.json()
-            return float(answer_dict["latestPrice"])
+            return round(float(answer_dict["latestPrice"]), 2)
     if asset_class == "Cryptocurrency":
         req = BASE_URL + "/stable/crypto/" + symbol + "usdt/price?token=" + API_KEY
         answer = requests.get(req)
         if answer.status_code == 200:
             answer_dict = answer.json()
-            return float(answer_dict["price"])
+            return round(float(answer_dict["price"]), 2)
 
 
 #returns list of all US stock symbols

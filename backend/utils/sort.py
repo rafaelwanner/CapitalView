@@ -1,8 +1,11 @@
 from app.models import Asset, User
+from flask import jsonify
 from data import get_price, get_rates
-from utils.calculations import fraction
+from utils.calculations import fraction, gain_percent
+from assets import fiat, cryptocurrency, stocks
 
-def prepare_overview(user):
+#gathers and sorts all data for overview
+def process_overview(user):
 
     assets = user.assets.all()
 
@@ -63,7 +66,7 @@ def prepare_overview(user):
     total_value = stocks_value + crypto_value + fiat_value
     data = [
             {
-                'assets':{
+                'holdings':{
                     'Stocks': stocks_dict,
                     'Cryptocurrency': crypto_dict,
                     'Fiat currency': fiat_dict
@@ -82,3 +85,51 @@ def prepare_overview(user):
          ]
 
     return data
+
+#gathers and sorts all data for detail of asset
+def process_detail(user, abbrev):
+
+    assets = user.assets.all()
+
+    if abbrev in fiat:
+        asset_class = 'Fiat currency'
+    elif abbrev in cryptocurrency:
+        asset_class = 'Cryptocurrency'
+    elif abbrev in stocks:
+        asset_class = 'Stocks'
+    else:
+        return jsonify(
+            message="No asset with name {}".format(abbrev)
+        ), 404
+
+    current_price = get_price(asset_class, abbrev)
+
+    holdings_dict = {}
+    total_quantity = 0
+    total_value = 0
+    for asset in assets:
+        if abbrev == asset.asset:
+            total_quantity += asset.quantity
+            gain = gain_percent(current_price, asset.price)
+            holdings_dict[asset.id] = {
+                                'date': asset.format_time(),
+                                'price': asset.price,
+                                'current_price': current_price,
+                                'quantity': asset.quantity,
+                                'gain_percent': gain,
+                                'gain': current_price - asset.price
+                                }
+
+    data = [
+            {
+            'asset_class': asset_class,
+            'asset': abbrev,
+            'total_quantity': total_quantity,
+            'total_value': current_price * total_quantity,
+            'holdings': holdings_dict
+            }
+        ]
+
+    return jsonify(
+        data=data
+    ), 200
