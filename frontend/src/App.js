@@ -12,7 +12,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
-        <PrivateRoute exact path='/overview' call={'overview'} component={Overview} />
+        <PrivateRoute exact path='/overview' component={Overview} />
       </ Switch>
     </ BrowserRouter>
   );

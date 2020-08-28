@@ -3,36 +3,32 @@ import { Redirect, Route } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../Components/Loading'
 
-function PrivateRoute({component: Component, call, ...rest}){
+function PrivateRoute({component: Component, ...rest}){
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState({})
+  const [response, setResponse] = useState([])
 
   useEffect(() => {
-  const fetchData = async () => {
-    setIsError(false);
-    setIsLoading(true);
-    try {
-      const result = await axios(
-        {
-          url: 'http://127.0.0.1:5000/api/' + call,
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+    const fetchData = async () => {
+      try {
+        const result = await axios(
+          {
+            url: '/api/is_authorized',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            }
           }
-        }
-      );
-      setData(result.data)
-    }
-    catch (error) {
-      setIsError(true);
-    }
-    setIsLoading(false)
-
-    };
-
-  fetchData();
-}, [call]);
+        );
+        setResponse(result.data)
+      }
+      catch (error) {
+        setIsError(true);
+      }
+      setIsLoading(false)
+      };
+    fetchData();
+  }, []);
 
 
    if (isLoading) {
@@ -41,7 +37,7 @@ function PrivateRoute({component: Component, call, ...rest}){
    return(
      <Route
       {...rest}
-      render ={ props => !(isError) ? (<Component {...props} data={data} />) : (<Redirect to = {{
+      render ={ props => !(isError) ? (<Component {...response} {...props} />) : (<Redirect to = {{
                                                                 pathname: '/login',
                                                                 state: {from: props.location}
                                                            }}/> )
