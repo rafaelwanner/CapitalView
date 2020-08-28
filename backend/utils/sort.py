@@ -21,8 +21,9 @@ def process_overview(user):
         elif asset.asset_class == 'Fiat currency':
             fiat.append(asset)
 
-    stocks_dict = {}
+    stocks_list = []
     stocks_value = 0
+    id = 0
     while stocks:
         stock = stocks[0]
         quantity = 0
@@ -32,11 +33,14 @@ def process_overview(user):
 
         value = quantity * get_price('Stocks', stock.asset)
         stocks_value += value
-        stocks_dict[stock.asset] = [quantity, value]
+        dict = {'id': id, 'asset': stock.asset, 'quantity': quantity, 'value': value}
+        stocks_list.append(dict)
         stocks = [x for x in stocks if x.asset != stock.asset] #new array
+        id += 1
 
-    crypto_dict = {}
+    crypto_list = []
     crypto_value = 0
+    id = 0
     while crypto:
         crypt = crypto[0]
         quantity = 0
@@ -46,11 +50,14 @@ def process_overview(user):
 
         value = quantity * get_price('Cryptocurrency', crypt.asset)
         crypto_value += value
-        crypto_dict[crypt.asset] = [quantity, value]
+        dict = {'id': id, 'asset': crypt.asset, 'quantity': quantity, 'value': value}
+        crypto_list.append(dict)
         crypto = [x for x in crypto if x.asset != crypt.asset] #new array
+        id += 1
 
-    fiat_dict = {}
+    fiat_list = []
     fiat_value = 0 #total value of fiat
+    id = 0
     while fiat: #while array not empty do the following
         fia = fiat[0]   #get first element of array
         quantity = 0
@@ -60,31 +67,41 @@ def process_overview(user):
 
         value = quantity * get_rates(fia.asset,'USD')
         fiat_value += value
-        fiat_dict[fia.asset] = [quantity, value]
+        dict = {'id': id, 'asset': fia.asset, 'quantity': quantity, 'value': value}
+        fiat_list.append(dict)
         fiat = [x for x in fiat if x.asset != fia.asset] #new array without investigated assets
+        id += 1
 
     total_value = stocks_value + crypto_value + fiat_value
-    data = [
-            {
-                'holdings':{
-                    'Stocks': stocks_dict,
-                    'Cryptocurrency': crypto_dict,
-                    'Fiat currency': fiat_dict
-                    }
-            },
-            {
-                'stats': {
-                    'net_worth': total_value,
-                    'fractions': {
-                        'Stocks': [fraction(total_value, stocks_value), stocks_value],
-                        'Cryptocurrency': [fraction(total_value, crypto_value)],
-                        'Fiat currency': [fraction(total_value, fiat_value)]
-                        }
-                    }
+
+    holdings_data = [
+                   {'class': 'Stocks', 'payload': stocks_list},
+                   {'class': 'Cryptocurrency', 'payload': crypto_list},
+                   {'class': 'Fiat currency', 'payload': fiat_list}
+                   ]
+
+    stats_data = [
+               {'net_worth': total_value},
+               {'fractions': [
+                           {'class': 'Stocks', 'payload': [fraction(total_value, stocks_value), stocks_value]},
+                           {'class': 'Cryptocurrency', 'payload': [fraction(total_value, crypto_value), crypto_value]},
+                           {'class': 'Cryptocurrency', 'payload': [fraction(total_value, fiat_value), fiat_value]}
+                           ]}
+               ]
+
+    data = {
+                    'holdings': holdings_data,
+                    'stats': stats_data
             }
-         ]
+
 
     return data
+
+    #return [ [{'type': 'holdings', 'asset_data': holdings_data}],
+             #[ {'type': 'stats', 'stats_data': stats_data}] ]
+
+
+
 
 #gathers and sorts all data for detail of asset
 def process_detail(user, abbrev):

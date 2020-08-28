@@ -81,6 +81,13 @@ def logout():
         message="Logout successful!"
     ), 200
 
+@app.route('/api/is_authorized', methods=['GET'])
+@jwt_required
+def is_authorized():
+    return jsonify(
+        message="Authorized!"
+    ), 200
+
 @app.route('/api/assets', methods=['GET'])
 @jwt_required
 def assets():
@@ -148,16 +155,16 @@ def add_asset():
 def overview():
 
     #   holdings: {
-    #        stocks: {
+    #        stocks: [
     #            AMD: [<qty>, <value in USD>],
     #            AAPL: [<qty>, <value in USD>]
-    #                },
-    #        crypto: {
+    #                ],
+    #        crypto: [
     #            BTC: [<qty>, <value in USD>]
-    #                }
-    #        fiat: {
+    #                ]
+    #        fiat: [
     #           CHF: [<qty>, <value in USD>]
-    #             }
+    #             ]
     #         },
     #   stats: {
     #        net_worth: {
