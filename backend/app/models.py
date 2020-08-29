@@ -10,6 +10,7 @@ class User(db.Model):
     name = db.Column(db.String(64))
     username = db.Column(db.String(64), unique=True)
     password_hash = db.Column(db.String(128))
+    admin = db.Column(db.Boolean, default=False)
     assets = db.relationship('Asset', backref='allocator', lazy='dynamic')
 
     def __reg__(self):
@@ -24,6 +25,9 @@ class User(db.Model):
     def get_id(self):
         return self.user_id
 
+    def set_admin(self):
+        self.admin = True
+
 class Asset(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     asset_class = db.Column(db.String)
@@ -37,7 +41,7 @@ class Asset(db.Model):
         return '<Asset {}'.format(self.asset)
 
     def set_price(self):
-        self.price = round(get_price(self.asset_class, self.asset), 2)
+        self.price = get_price(self.asset_class, self.asset)
 
     def format_time(self):
         return self.timestamp.strftime('%m/%d/%Y, %H:%M:%S')
