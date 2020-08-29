@@ -50,6 +50,32 @@ def register():
         token = access_token
     )
 
+@app.route('/api/delete_user', methods=['POST'])
+@jwt_required
+def delete_user():
+
+    #   data: {
+    #        username: '',
+    #    }
+
+    current_user = get_jwt_identity()
+    user = User.query.filter_by(username=current_user).first()
+
+    if not user.admin:
+        return jsonify(
+            message="No access right!"
+        ), 403
+
+    data = request.get_json()
+    user = User.query.filter_by(username=data['username']).first()
+
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify(
+        message="User deleted successfully!"
+    ), 200
+
 @app.route('/api/login', methods=['POST'])
 def login():
 
@@ -59,6 +85,11 @@ def login():
     #    }
 
     data = request.get_json()
+    if data == None:
+        return jsonify(
+            message="No object recieved!"
+        ), 400
+
     user = User.query.filter_by(username=data['username']).first()
 
     if user == None or not user.check_password(data['password']):
@@ -244,7 +275,7 @@ def edit():
         message="Update successfull!"
     ), 200
 
-@app.route('/api/delete/<id>', methods=['GET'])
+@app.route('/api/delete_asset/<id>', methods=['GET'])
 @jwt_required
 def delete(id):
 
