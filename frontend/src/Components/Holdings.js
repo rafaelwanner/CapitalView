@@ -9,7 +9,9 @@ function Holdings(holdings) {
   return(
     <div>
       <h1>Holdings</h1>
-      {assets}
+        <div className="holdings">
+          {assets}
+        </div>
     </div>
   )
 }

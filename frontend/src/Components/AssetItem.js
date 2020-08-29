@@ -1,13 +1,15 @@
 import React from 'react';
+import '../static/css/Asset.css';
+
 
 
 function AssetItem(props) {
 
   return(
-    <div>
-      <h3>{props.asset.asset}</h3>
-      <p>{props.asset.quantity}</p>
-      <p>{props.asset.value}</p>
+    <div className="asset-item">
+      <h4 className="cell">{props.asset.asset}</h4>
+      <p className="cell">{props.asset.quantity} shares</p>
+      <p>{props.asset.value}$</p>
     </div>
   )
 }

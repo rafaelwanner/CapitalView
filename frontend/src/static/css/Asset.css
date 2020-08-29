@@ -1,0 +1,29 @@
+.asset{
+  max-width: 750px;
+  margin: auto;
+}
+
+h3{
+  text-align: center;
+}
+
+.asset-item{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #FFEFEF;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.asset-item:hover{
+  transform: scale(1.05);
+}
+
+.asset-item > h4, p{
+  text-align: center;
+}
+
+.cell{
+  border-right: 1px solid #000;
+}

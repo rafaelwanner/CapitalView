@@ -1,0 +1,13 @@
+.home{
+  background: #ffffee;
+  padding: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  align-items: center;
+}
+
+h1{
+  padding-top: 30px;
+  text-align: center;
+}

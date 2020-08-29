@@ -1,10 +1,14 @@
 import React from 'react';
-
+import '../static/css/Home.css';
 
 function Home() {
 
   return(
-    <h1>Home</h1>
+    <div className="home">
+      <div className="container">
+        <h1>Welcome to Capital View</h1>
+      </div>
+    </div>
   )
 }
 

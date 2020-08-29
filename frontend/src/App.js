@@ -5,6 +5,10 @@ import PrivateRoute from './Routes/PrivateRoute';
 import Overview from './Components/Overview';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import Add from './Components/Add';
+import Logout from './Components/Logout';
 
 function App() {
   return (
@@ -12,7 +16,11 @@ function App() {
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
+        <PrivateRoute exact path='/logout' component={Logout} />
         <PrivateRoute exact path='/overview' component={Overview} />
+        <PrivateRoute exact path='/add' component={Add} />
       </ Switch>
     </ BrowserRouter>
   );
