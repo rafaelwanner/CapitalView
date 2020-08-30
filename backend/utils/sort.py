@@ -121,21 +121,22 @@ def process_detail(user, abbrev):
 
     current_price = get_price(asset_class, abbrev)
 
-    holdings_dict = {}
+    holdings = []
     total_quantity = 0
     total_value = 0
     for asset in assets:
         if abbrev == asset.asset:
             total_quantity += asset.quantity
             gain = gain_percent(current_price, asset.price)
-            holdings_dict[asset.id] = {
+            holdings.append({
+                                'id': asset.id,
                                 'date': asset.format_time(),
                                 'price': asset.price,
                                 'current_price': current_price,
                                 'quantity': asset.quantity,
                                 'gain_percent': gain,
                                 'gain': current_price - asset.price
-                                }
+                                })
 
     data = [
             {
@@ -143,7 +144,7 @@ def process_detail(user, abbrev):
             'asset': abbrev,
             'total_quantity': total_quantity,
             'total_value': current_price * total_quantity,
-            'holdings': holdings_dict
+            'holdings': holdings
             }
         ]
 
