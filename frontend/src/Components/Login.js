@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Formik, Field, Form } from 'formik';
 import Swal from 'sweetalert2';
-
+import '../static/css/Form.css';
 
 function Login() {
 
@@ -21,14 +21,14 @@ function Login() {
                    icon: 'error',
                    text: error.response.data.message,
                    confirmButtonText: 'Try again',
-                   footer: '<a href=/register>Register instead</a>)'
+                   footer: '<a href=/register>Register instead</a>'
                   });
     });
   }
 
 
   return(
-    <div>
+    <div className="form-container">
       <h1>Login</h1>
         <Formik
           initialValues={{
@@ -37,16 +37,19 @@ function Login() {
           }}
           onSubmit={values => {validate(values)}}
         >
-          <Form>
-            <label htmlFor="username">Username</label>
-            <Field id="username" name="username" placeholder="Username" />
-
-            <label htmlFor="password">Password</label>
-            <Field id="password" name="password" placeholder="Password" type="password" />
-
-
-            <button type="submit">Submit</button>
+        <div className="login-form">
+          <Form >
+            <div className="login-form">
+              <div className="field-form">
+                <Field id="username" name="username" placeholder="Username" />
+              </div>
+              <div className="field-form">
+                <Field id="password" name="password" placeholder="Password" type="password" />
+              </div>
+              <button className="center" type="submit">Login</button>
+            </div>
           </Form>
+        </div>
         </Formik>
     </div>
 

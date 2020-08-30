@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import Calculating from './Calculating';
 import Holdings from './Holdings';
 import Stats from './Stats';
@@ -11,24 +12,34 @@ function Overview(){
   const [stats, setStats] = useState([]);
   const [worth, setWorth] = useState([]);
   const [isCalculating, setIsCalculating] = useState(true);
-  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-        axios({
-          method: 'get',
-          url: '/api/overview',
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+        const fetchData = async () => {
+          try {
+            const response = await axios(
+              {
+                url: '/api/overview',
+                headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+                }
+              }
+            );
+            setHoldings(response.data.data.holdings);
+            setStats(response.data.data.stats[1].fractions);
+            setWorth(response.data.data.stats[0]);
+            setIsCalculating(false);
           }
-        }).then(response => {
-                setHoldings(response.data.data.holdings);
-                setStats(response.data.data.stats[1].fractions);
-                setWorth(response.data.data.stats[0]);
-        }).catch(error => {
-                setIsError(true)
-        });
+          catch (error) {
+            Swal.fire({title: 'Oops...',
+                       icon: 'error',
+                       text: error.response.data.message,
+                       confirmButtonText: 'Try again'
+          })
+          setIsCalculating(false)
+        };
+      }
 
-      setIsCalculating(false);
+      fetchData();
       },
       []);
 

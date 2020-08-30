@@ -3,17 +3,18 @@
   margin: auto;
 }
 
-h3{
+h3, h2{
   text-align: center;
 }
 
 .asset-item{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  background: #FFEFEF;
+  background: #BFC3F9;
   border-radius: 20px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 }
 
 .asset-item:hover{

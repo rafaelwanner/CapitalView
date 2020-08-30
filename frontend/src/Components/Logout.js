@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { Redirect, Switch } from 'react-router';
 
 
 function Logout(props) {
+
 
   useEffect(() => {
         axios({
@@ -13,25 +15,26 @@ function Logout(props) {
             'Authorization': 'Bearer ' + localStorage.getItem('authToken')
           }
         }).then(response => {
-            window.location.href = '/';
             localStorage.removeItem('authToken')
-
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Logged out!',
+              showConfirmButton: false,
+              timer: 1500
+            }).then(window.location.href = '/');
         }).catch(error => {
-          Swal.fire({title: 'Oops...',
-                     icon: 'error',
-                     text: error.response.data.msg,
-                     confirmButtonText: 'Try again',
-                     footer: '<a href=/register>Register instead</a>)'
-                    });
+          localStorage.removeItem('authToken')
+          window.location.href = '/';
         });
       },
       []);
 
-  return(
-    <div>
-      <h1>Logout</h1>
-    </div>
-  )
+      return(
+        <Switch>
+          <Redirect to={{ pathname: '/', state: {from: '/logout'}}} />
+        </Switch>
+      )
 }
 
 export default Logout;

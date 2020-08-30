@@ -1,0 +1,40 @@
+
+.form-container{
+  margin: auto;
+  max-height: 1000px;
+  max-width: 1000px;
+}
+
+.login-form{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.register-form{
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+
+.field-form{
+  margin: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+
+}
+
+.button {
+    position: absolute;
+    top: 50%;
+
+}
+.field-select{
+  margin: 50px 300px;
+}

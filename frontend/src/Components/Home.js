@@ -1,7 +1,9 @@
 import React from 'react';
 import '../static/css/Home.css';
 
-function Home() {
+function Home(props) {
+
+
 
   return(
     <div className="home">

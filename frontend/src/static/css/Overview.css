@@ -3,6 +3,11 @@
   margin: auto;
 }
 
+.detail-container{
+  max-width: 1200px;
+  margin: auto;
+}
+
 .content-wrapper{
   margin: 0;
   padding: 0;
@@ -10,6 +15,58 @@
   grid-template-columns: 1fr 1fr;
   grid-gap: 2rem;
   margin-bottom: 2rem;
+}
+
+.stats-detail{
+  margin: 30px auto;
+  padding: 10px;
+  background: #BFC3F9;
+  max-width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.holdings-detail{
+
+}
+
+.asset-detail-item{
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 60px;
+  padding: 0px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.asset-detail-title{
+  display: flex;
+  justify-content: center;
+  margin: 0px auto;
+  text-align: center;
+  padding-bottom: 0px;
+}
+
+.cell-title{
+  display:inline-block;
+  margin-bottom: 5px;
+}
+
+.stats-cell{
+  margin: 0px;
+}
+
+.asset-detail-rows{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.asset-detail-columns{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
 }
 
 .chart{

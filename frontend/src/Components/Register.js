@@ -41,7 +41,7 @@ function Register() {
 
 
   return(
-    <div>
+    <div className="form-container">
       <h1>Register</h1>
         <Formik
           initialValues={{
@@ -51,19 +51,24 @@ function Register() {
           }}
           onSubmit={values => {validate(values)}}
         >
-          <Form>
-          <label htmlFor="name">Name</label>
-          <Field id="name" name="name" placeholder="Name" />
+          <div className="register-form">
+            <Form>
+              <div className="login-form field-form">
+                <Field id="name" name="name" placeholder="Name" />
+              </div>
 
-            <label htmlFor="username">Username</label>
-            <Field id="username" name="username" placeholder="Username" />
+              <div className="login-form field-form">
+                <Field id="username" name="username" placeholder="Username" />
+              </div>
 
-            <label htmlFor="password">Password</label>
-            <Field id="password" name="password" placeholder="Password" type="password" />
+              <div className="login-form field-form">
+                <Field id="password" name="password" placeholder="Password" type="password" />
+              </div>
 
+              <button type="submit">Register</button>
 
-            <button type="submit">Submit</button>
-          </Form>
+            </Form>
+          </div>
         </Formik>
     </div>
 

@@ -9,6 +9,7 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import Add from './Components/Add';
 import Logout from './Components/Logout';
+import Detail from './Components/Detail';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <PrivateRoute exact path='/logout' component={Logout} />
         <PrivateRoute exact path='/overview' component={Overview} />
         <PrivateRoute exact path='/add' component={Add} />
+        <PrivateRoute exact path='/detail' component={Detail}/>
       </ Switch>
     </ BrowserRouter>
   );
