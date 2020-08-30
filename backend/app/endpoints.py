@@ -3,8 +3,9 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from app import app, db, jwt
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
-from assets import stocks, cryptocurrency, fiat
+from assets import stocks, cryptocurrency, fiat, stocks_options, cryptocurrency_options
 from utils.sort import process_overview, process_detail
+import time
 
 blacklist = set()
 
@@ -133,8 +134,8 @@ def assets():
 
     return {
         'assets': {
-            'Stocks': stocks,
-            'Cryptocurrency': cryptocurrency,
+            'Stocks': stocks_options,
+            'Cryptocurrency': cryptocurrency_options,
             'Fiat currency': fiat
             }
         }
@@ -213,7 +214,6 @@ def overview():
     user = User.query.filter_by(username=current_user).first()
 
     data = process_overview(user)
-
     return jsonify(
         data=data
     ), 200
@@ -227,15 +227,15 @@ def detail(asset): #i.e. asset = AMD
     #        asset: '',
     #        total_quantity: '',
     #        total_value: '',
-    #        holdings: {
-    #               id: {
+    #        holdings: [{
+    #                   id: <asset ID>
     #                   date: <data bought>,
     #                   price: <price bought at>,
     #                   current_price: <price now>,
     #                   quantity: '',
     #                   gain_percent: <gain in percent>,
     #                   gain: <gain in USD>
-    #                }
+    #                }]
     #         }
     #    }
 
