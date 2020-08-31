@@ -44,4 +44,4 @@ class Asset(db.Model):
         self.price = get_price(self.asset_class, self.asset)
 
     def format_time(self):
-        return self.timestamp.strftime('%m/%d/%Y, %H:%M:%S')
+        return self.timestamp.strftime('%d.%m.%Y')
