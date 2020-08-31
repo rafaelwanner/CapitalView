@@ -5,7 +5,7 @@ import '../static/css/Overview.css';
 
 function HoldingsDetail(props) {
 
-  const assets = props.data.map(item => <AssetDetail key={item.id} asset={item} />)
+  const assets = props.data.map(item => <AssetDetail key={item.id} asset={item} name={props.asset} />)
 
   return(
     <div>

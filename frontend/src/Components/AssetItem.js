@@ -15,7 +15,7 @@ function AssetItem(props) {
 
   if(redirect){
       return(
-              <Redirect to={{pathname: '/detail', state: props.asset}} component={Detail} />
+              <Redirect to={{pathname: '/detail', state: props.asset.asset}} component={Detail} />
       )
   }
   else{

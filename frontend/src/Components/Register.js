@@ -23,12 +23,12 @@ function Register() {
                     window.location.href = '/overview';
                   }
                 });
-      }).catch(error => {
-        if (error.response.status === 409){
-          Swal.fire({title: 'Oops...',
-                     icon: 'error',
-                     text: error.response.data.message
-                    });
+              }).catch(error => {
+                if (error.response.status === 409){
+                  Swal.fire({title: 'Oops...',
+                           icon: 'error',
+                           text: error.response.data.message
+                          });
         }
         else{
           Swal.fire({title: 'Oops...',
