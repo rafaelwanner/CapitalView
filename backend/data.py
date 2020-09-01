@@ -23,6 +23,8 @@ def get_price(asset_class, symbol):
         if answer.status_code == 200:
             answer_dict = answer.json()
             return round(float(answer_dict["price"]), 2)
+    else:
+        return get_rates(symbol, 'USD') # 1 <symbol> = x USD
 
 
 #returns list of all US stock symbols
