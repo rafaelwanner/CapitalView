@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, create_access_token, get_jwt_identi
 from app import app, db, jwt
 from app.models import User, Asset
 from sqlalchemy.exc import IntegrityError
-from assets import stocks, cryptocurrency, fiat, stocks_options, cryptocurrency_options
+from assets import stocks, cryptocurrency, fiat, stocks_options, cryptocurrency_options, fiat_options
 from utils.sort import process_overview, process_detail
 import time
 
@@ -136,7 +136,7 @@ def assets():
         'assets': {
             'Stocks': stocks_options,
             'Cryptocurrency': cryptocurrency_options,
-            'Fiat currency': fiat
+            'Fiat currency': fiat_options
             }
         }
 
@@ -268,6 +268,7 @@ def edit():
         ), 404
 
     asset.price = data['price']
+    db.session.commit()
     asset.quantity = data['quantity']
     db.session.commit()
 
