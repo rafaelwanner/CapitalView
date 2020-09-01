@@ -46,7 +46,7 @@ function Detail(props) {
 
       fetchData();
       },
-      [props.location.state, isCalculating]);
+      [props.location.state]);
 
   if (isCalculating) {
     return <Calculating />;

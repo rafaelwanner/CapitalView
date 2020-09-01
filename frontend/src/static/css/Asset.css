@@ -28,3 +28,10 @@ h3, h2{
 .cell{
   border-right: 1px solid #000;
 }
+
+.center{
+  max-height: 40px;
+  max-width: 90px;
+  margin: auto;
+  text-align: center;
+}

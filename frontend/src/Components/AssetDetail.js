@@ -7,7 +7,7 @@ import { Redirect } from 'react-router';
 
 function AssetDetail(props) {
 
-  const [redirect, setRedirect] = useState(false)
+  const [redirect, setRedirect] = useState(false);
 
 
 
@@ -29,7 +29,7 @@ function AssetDetail(props) {
     ]).then((result) => {
       if (result.value) {
           const quantity = result.value[0];
-          const price = result.value[0];
+          const price = result.value[1];
           if (isNaN(price)){
             Swal.fire({title: 'Invalid price',
                        icon: 'error',
@@ -64,6 +64,8 @@ function AssetDetail(props) {
                           setRedirect(true); //doesnt redirect
                         }
                       });
+                      console.log('out');
+                      setRedirect(true);
             }).catch(error => {
                 Swal.fire({title: 'Oops...',
                            icon: 'error',
@@ -72,6 +74,8 @@ function AssetDetail(props) {
 
           });
         }
+        console.log('r')
+        setRedirect(true);
       })
     }
 
@@ -126,6 +130,7 @@ function AssetDetail(props) {
   }
 
     if(redirect){
+      console.log('in');
       return(
         <Redirect to={{pathname: '/detail', state: props.name}} component={Detail} />
       )
