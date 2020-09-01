@@ -85,7 +85,7 @@ def process_overview(user):
                {'fractions': [
                            {'class': 'Stocks', 'payload': [fraction(total_value, stocks_value), stocks_value]},
                            {'class': 'Cryptocurrency', 'payload': [fraction(total_value, crypto_value), crypto_value]},
-                           {'class': 'Cryptocurrency', 'payload': [fraction(total_value, fiat_value), fiat_value]}
+                           {'class': 'Fiat currency', 'payload': [fraction(total_value, fiat_value), fiat_value]}
                            ]}
                ]
 
