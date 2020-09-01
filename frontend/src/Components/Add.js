@@ -34,11 +34,16 @@ function Add(props) {
             setIsLoading(false);
           }
           catch (error) {
-            Swal.fire({title: 'Oops...',
-                       icon: 'error',
-                       text: error.response.data.message,
-                       confirmButtonText: 'Try again'
-          });
+            if (error.response.status === 401 || error.response.status === 422){
+              window.location.href = '/login';
+            }
+            else{
+              Swal.fire({title: 'Oops...',
+                         icon: 'error',
+                         text: error.response.data.message,
+                         confirmButtonText: 'Try again'
+              });
+          }
           setIsLoading(false)
         };
       }
@@ -84,7 +89,7 @@ function Add(props) {
           });
         }
       }
-      
+
       function checkDisable(value){
         if (value === 'Stocks'){
           setChosen(stocks)
