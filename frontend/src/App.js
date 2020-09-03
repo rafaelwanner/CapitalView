@@ -10,6 +10,8 @@ import Register from './Components/Register';
 import Add from './Components/Add';
 import Logout from './Components/Logout';
 import Detail from './Components/Detail';
+import Temporary from './Components/Temporary';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/register' component={Register} />
+        <Route exact path='/temp' component={Temporary} />
         <PrivateRoute exact path='/logout' component={Logout} />
         <PrivateRoute exact path='/overview' component={Overview} />
         <PrivateRoute exact path='/add' component={Add} />
