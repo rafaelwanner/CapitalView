@@ -41,8 +41,16 @@ a{
   margin: 10px;
   border-radius: 10px;
   padding: 7px;
+  color: black;
 }
 
+.link-element:visited{
+  color: black;
+}
+
+.link-element:hover{
+  transform: scale(1.05);
+}
 @media screen and (min-height: 320px) {
   .link-element {
     font-size: 20px;

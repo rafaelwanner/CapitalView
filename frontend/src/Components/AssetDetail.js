@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import '../static/css/Asset.css';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import Detail from './Detail';
+import Temporary from './Temporary';
 import { Redirect } from 'react-router';
 
 function AssetDetail(props) {
 
   const [redirect, setRedirect] = useState(false);
-
-
 
   function editAsset(){
     Swal.mixin({
@@ -64,8 +62,6 @@ function AssetDetail(props) {
                           setRedirect(true); //doesnt redirect
                         }
                       });
-                      console.log('out');
-                      setRedirect(true);
             }).catch(error => {
                 Swal.fire({title: 'Oops...',
                            icon: 'error',
@@ -74,8 +70,6 @@ function AssetDetail(props) {
 
           });
         }
-        console.log('r')
-        setRedirect(true);
       })
     }
 
@@ -132,7 +126,7 @@ function AssetDetail(props) {
     if(redirect){
       console.log('in');
       return(
-        <Redirect to={{pathname: '/detail', state: props.name}} component={Detail} />
+        <Redirect to={{pathname: '/temp', state: props.name}} component={Temporary} />
       )
     }
     else{
