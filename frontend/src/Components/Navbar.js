@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Headroom from 'react-headroom';
 import logo from '../static/images/logo192.png';
@@ -6,7 +7,29 @@ import '../static/css/Navbar.css';
 
 function Navbar() {
 
-  if (localStorage.getItem("authToken") === null){
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(
+          {
+            url: '/api/is_authorized',
+            headers: {
+              'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            }
+          }
+        );
+        setIsAuthorized(true);
+      }
+      catch (error) {
+        setIsAuthorized(false);
+      }
+      };
+    fetchData();
+  }, []);
+
+  if (!isAuthorized){
 
     return(
       <Headroom style={{background: '#fff'}}>
