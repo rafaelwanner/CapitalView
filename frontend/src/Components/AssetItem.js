@@ -22,8 +22,8 @@ function AssetItem(props) {
     return(
       <div className="asset-item" onClick={detail}>
         <h4 className="cell">{props.asset.asset}</h4>
-        <p className="cell">{props.asset.quantity} shares</p>
-        <p>{props.asset.value}$</p>
+        <p className="cell">{Math.round((props.asset.quantity + Number.EPSILON) * 100) / 100} shares</p>
+        <p>{Math.round((props.asset.value + Number.EPSILON) * 100) / 100}$</p>
       </div>
       )
     }
