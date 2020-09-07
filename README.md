@@ -37,3 +37,22 @@ Feel free to clone the project and run it locally on your machine. Here is a lit
      source env/bin/activate
      pip install -r requirements.txt
 ```
+4. Create a .env file in the backend folder containing:
+ 1. the database url (for help to get started with Postgresql check out this [Tutorial](https://www.patricksoftwareblog.com/database-using-postgresql-and-sqlalchemy/)
+ 2. the API key for the financial data. For that create a free account at IEX Cloud to get an API key.
+ 3. a jwt key for the authentifaction token. This can be a random sequence of characters and digits.
+ ![this is how it should look](/frontend/public/images/env.jpg)
+
+5. Install all node modules:
+```bash
+     cd ../frontend
+     npm install
+```
+
+
+
+
+
+
+
+
