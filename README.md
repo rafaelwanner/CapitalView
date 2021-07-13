@@ -1,10 +1,11 @@
 # CapitalView
 
-![Portfolio Overview](/frontend/public/images/overview.jpg)
-
 ## About
 
 This is a little CRUD web application which lets the user keep track of his capital. Various assets from three different asset classes (Stocks, Cryptocurrency and Fiat currency) can be added to the portfolio where they are represented in a clean and clear mannor. There is also a detail view of each assets which shows how many assets the user owns, at which price it was bought and what the current gain on the asset is.
+
+![Portfolio Overview](/frontend/public/images/overview.jpg)
+
 ![Detail View of Asset](/frontend/public/images/detail.jpg)
 
 ## Technologies
